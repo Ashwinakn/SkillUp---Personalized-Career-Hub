@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elevated Buttons with Sliding Panel</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            width: 100%;
+            overflow: hidden;
+
+            background: #b25ec5;
+            /* Light gray background color */
+            background-image: url('bg_1.png'); 
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: contain; /* Adjusts image to fit while keeping aspect ratio */
+        }
+
+        .button {
+            background: #FFDDAE;
+            border: none;
+            padding: 20px 40px;
+            margin: 10px;
+            font-size: 20px;
+            font-weight: bold;
+            border-radius: 8px;
+            box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+            position: absolute;
+        }
+        .button:hover {
+            transform: scale(1.1);
+            box-shadow: 6px 6px 15px rgba(0, 0, 0, 0.4);
+            background: #E8B86D;
+        }
+        .button:active {
+            box-shadow: 0 0 20px 5px rgba(215, 18, 240, 0.8);
+            transform: scale(1.05);
+        }
+        .Program { top: 76%; left: 28%; }
+        .mathematics { top: 69%; left: 65%; }
+        .datahandling { top: 62.5%; left: 11%; }
+        .ML { top: 57%; left: 59%; }
+        .bigdata { top: 51%; left: 21%; }
+        .tools { top: 45%; left: 65%; }
+        .cloud { top: 38%; left: 26.5%; }
+        .business { top: 32.5%; left: 57.3%; }
+
+        /* Location images */
+        .location-image {
+            position: absolute;
+            width: 100px;
+            height: auto;
+        }
+
+        .Program-img { top: 75%; left: 45.5%; }
+        .mathematics-img{ top: 68%; left: 60.5%; }
+        .datahandling-img { top: 62.5%; left: 33%; }
+        .ML-img { top: 56%; left: 55%; }
+        .bigdata-img { top: 50%; left: 38.5%; }
+        .tools-img { top: 44%; left: 60.8%; }
+        .cloud-img { top: 37%; left: 43.3%; }
+        .business-img { top: 31.5%; left: 53%; }
+
+        .panel {
+            position: fixed;
+            top: 0;
+            right: -300px;
+            width: 300px;
+            height: 100%;
+            background: #10375C;
+            box-shadow: -4px 0 10px rgba(0, 0, 0, 0.3);
+            transition: right 0.3s ease-in-out;
+            padding: 20px;
+        }
+        .panel.active {
+            right: 0;
+        }
+        .panel img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Location Images -->
+    <img src="location.png" class="location-image Program-img">
+    <img src="location.png" class="location-image mathematics-img">
+    <img src="location.png" class="location-image datahandling-img">
+    <img src="location.png" class="location-image ML-img">
+    <img src="location.png" class="location-image bigdata-img">
+    <img src="location.png" class="location-image tools-img">
+    <img src="location.png" class="location-image cloud-img">
+    <img src="location.png" class="location-image business-img">
+
+    <!-- Buttons -->
+    <button class="button Program" onclick="openPanel('Program & Scripting')">Program & Scripting</button>
+    <button class="button mathematics" onclick="openPanel('Mathematics & statistics')">Mathematics & statistics</button>
+    <button class="button datahandling" onclick="openPanel('Data Handling & Processing')">Data Handling & Processing</button>
+    <button class="button ML" onclick="openPanel('Machine Learning & AI')">Machine Learning & AI</button>
+    <button class="button bigdata" onclick="openPanel('Big Data & Databases')">Big Data & Databases</button>
+    <button class="button tools" onclick="openPanel('Tools & Libraries')">Tools & Libraries</button>
+    <button class="button cloud" onclick="openPanel('Cloud & deployment')">Cloud & deployment</button>
+    <button class="button business" onclick="openPanel('bBusiness & Soft Skills')">Business & Soft Skills</button>
+
+    <div class="panel" id="infoPanel">
+        <h2 id="panelTitle" style="color:#FCFAEE">Panel</h2>
+        <img id="panelImage" src="" alt="Topic Image">
+        <p id="panelContent">Click a button to see details.</p>
+        <h3 style="color:#FCFAEE">Free Learning</h3>
+        <ul id="freeLinks"></ul>
+        <h3 style="color:#FCFAEE">Paid Learning</h3>
+        <ul>
+            <li><a id="courseraLink" href="#" target="_blank">Coursera</a></li>
+            <li><a id="udemyLink" href="#" target="_blank">Udemy</a></li>
+        </ul>
+        <button onclick="closePanel()">Close</button>
+    </div>
+
+    <script>
+        const learningResources = {
+            'Program & Scripting': {
+                free: [
+                    { text: "Python full Course", url: "https://www.youtube.com/watch?v=UB1O30fR-EE" },
+                    { text: "R programming Language", url: "https://www.youtube.com/watch?v=qz0aGYrrlhU" },
+                    { text: "SQL full course", url: "https://www.youtube.com/watch?v=G3e-cpL7ofc" },
+                    { text: "Bash and shell scripting", url: "https://www.youtube.com/watch?v=G3e-cpL7ofc" }
+                ],
+                paid: {
+                    coursera: "https://www.coursera.org/courses?query=html",
+                    udemy: "https://www.udemy.com/topic/html/"
+                }
+            },
+            'Mathematics & statistics': {
+                free: [
+                    { text: "Learn Linear Algebra", url: "https://www.youtube.com/watch?v=yfoY53QXEnI" },
+                    { text: "Probability & Statistics", url: "https://www.youtube.com/watch?v=1PnVor36_40" },
+                    { text: "Calculus (Optimization)", url: "https://www.youtube.com/watch?v=Edsxf_NBFrw" }
+                ],
+                paid: {
+                    coursera: "https://www.coursera.org/courses?query=css",
+                    udemy: "https://www.udemy.com/topic/css/"
+                }
+            },
+            'Data Handling & Processing': {
+                free: [
+                    { text: "Data Cleaning & Preprocessing", url: "https://youtu.be/GP-2634exqA?si=XiV0DE6ruylTgGxH" },
+                    { text: "Data Wrangling", url: "https://www.youtube.com/live/pGsTw3P1D_4?si=kyyTiX4os3J2zYJK" },
+                    { text: "Data Visualization", url: "https://youtu.be/MiiANxRHSv4?si=vw9m-Fa9062yeJkw" }
+                ],
+                paid: {
+                    coursera: "https://www.coursera.org/learn/python-data-processing?",
+                    udemy: "https://www.udemy.com/courses/search/?src=ukw&q=data+handling"
+                }
+            },
+            'Machine Learning & AI': {
+                free: [
+                    { text: "Supervised Learning (Regression, Classification)", url: "https://www.youtube.com/watch?v=teWYOMn9Lso" },
+                    { text: "Unsupervised Learning (Clustering, Dimensionality Reduction)", url: "https://www.youtube.com/watch?v=teWYOMn9Lso" },
+                    { text: "Deep Learning (Neural Networks, CNN, RNN, Transformers)", url: "https://www.youtube.com/watch?v=VyWAvY2CF9c" }
+                ],
+                paid: {
+                    coursera: "https://www.coursera.org/specializations/machine-learning-introduction?",
+                    udemy: "https://www.udemy.com/courses/search/?src=ukw&q=machine+learning"
+                }
+            },
+            'Big Data & Databases': {
+                free: [
+                    { text: "NoSQL (MongoDB)", url: "https://www.youtube.com/watch?v=xh4gy1lbL2k" },
+                    { text: "Hadoop & Spark", url: "https://www.youtube.com/watch?v=hRtInGQhBxs&list=PLJlKGwy-7Ac6ASmzZPjonzYsV4vPELf0x" },
+                    { text: "Data Warehousing (Redshift, BigQuery)", url: "https://www.youtube.com/watch?v=J326LIUrZM8" }
+                ],
+                paid: {
+                    coursera: "https://www.coursera.org/specializations/big-data?",
+                    udemy: "https://www.udemy.com/courses/search/?q=databases&src=sac&kw=databases"
+                }
+            },
+            'Tools & Libraries': {
+                free: [
+                    { text: "Pandas, NumPy", url: "https://www.youtube.com/watch?v=FniLzpaSFGk" },
+                    { text: "Matplotlib, Seaborn", url: "https://www.youtube.com/watch?v=3Xc3CA655Y4" },
+                    { text: "Scikit-Learn", url: "https://www.youtube.com/watch?v=0B5eIE_1vpU" },
+                    { text: "TensorFlow / PyTorch", url: "https://www.youtube.com/watch?v=GIsg-ZUy0MY&t=205s" }
+                ],
+                paid: {
+                    coursera: "https://www.coursera.org/projects/scikit-learn-for-machine-learning-classification-problems?",
+                    udemy: "https://www.udemy.com/courses/search/?q=tensorflow&src=sac&kw=tensorflow"
+                }
+            },
+            'Cloud & deployment': {
+                free: [
+                    { text: "AWS / GCP / Azure", url: "https://www.youtube.com/watch?v=EuFj8GP4TMM" },
+                    { text: "Docker & Kubernetes", url: "https://www.youtube.com/watch?v=Wf2eSG3owoA" },
+                    { text: "API Development (Flask / FastAPI)", url: "https://www.youtube.com/watch?v=0sOvCWFmrtA" },
+                    { text: "Model Deployment (Streamlit, Gradio)", url: "https://www.youtube.com/watch?v=RiCQzBluTxU" }
+                ],
+                paid: {
+                    coursera: "https://www.coursera.org/search?query=cloud",
+                    udemy: "https://www.udemy.com/courses/search/?q=deployment&src=sac&kw=deployment"
+                }
+            },
+            'Business & Soft Skills': {
+                free: [
+                    { text: "Problem-Solving", url: "https://www.youtube.com/watch?v=oBt53YbR9Kk" },
+                    { text: "Domain Knowledge (Finance, Healthcare, etc.)", url: "https://www.youtube.com/watch?v=xfgyOQF4Itc&list=PLI3e_ahHXWGmBu2f7C2NTSGzd01uY4JJT" },
+                    { text: "Communication & Storytelling", url: "https://www.youtube.com/watch?v=YzbzIzgvRLY" },
+                    { text: "Experimentation (A/B Testing)", url: "https://www.youtube.com/watch?v=KZe0C0Qq4p0" }
+                ],
+                paid: {
+                    coursera: "https://www.coursera.org/search?query=business",
+                    udemy: "https://www.udemy.com/courses/search/?q=soft+skills&src=sac&kw=soft+skills"
+                }
+            }
+        };
+
+        function openPanel(title) {
+            document.getElementById('panelTitle').innerText = title;
+            document.getElementById('panelContent').innerText = `You clicked on ${title}. More details can go here.`;
+
+            let freeLinks = document.getElementById('freeLinks');
+            freeLinks.innerHTML = "";
+            if (learningResources[title]) {
+                learningResources[title].free.forEach(link => {
+                    let li = document.createElement('li');
+                    let a = document.createElement('a');
+                    a.href = link.url;
+                    a.innerText = link.text;
+                    a.target = "_blank";
+                    li.appendChild(a);
+                    freeLinks.appendChild(li);
+                });
+                document.getElementById('courseraLink').href = learningResources[title].paid.coursera;
+                document.getElementById('udemyLink').href = learningResources[title].paid.udemy;
+            }
+            document.getElementById('infoPanel').classList.add('active');
+        }
+        
+        function closePanel() {
+            document.getElementById('infoPanel').classList.remove('active');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career Question</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            box-sizing: border-box;
+        }
+        body {
+            background: linear-gradient(to bottom, #000000, #6A23AC);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding-top: 80px;
+        }
+        .form-box {
+            width: 800px;
+            padding: 40px;
+            border-radius: 12px;
+            backdrop-filter: blur(8px);
+            background-color: rgba(0, 0, 0, 0.205);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+        .form-box h2 {
+            color: #fff;
+            text-align: center;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .option-btn {
+            width: 120px;
+            padding: 12px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            background-color: #6A23AC;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-align: center;
+        }
+        .option-btn:hover {
+            background-color: #4117b5;
+        }
+        .navbar {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 50px;
+            background: linear-gradient(to right, #00000000, #00000000);
+            color: white;
+            z-index: 1000;
+        }
+        .navbar .title {
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="title">SkillUP</div>
+    </div>
+
+    <div class="form-box">
+        <h2>Do You Already Have a Career in Mind?</h2>
+        <div class="btn-container">
+            <a href="yes page.html" class="option-btn">Yes</a>
+            <a href="no page.html" class="option-btn">No</a>
+        </div>
+    </div>
+</body>
+</html>

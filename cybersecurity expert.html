@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elevated Buttons with Sliding Panel</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            width: 100%;
+            overflow: hidden;
+
+            background: #b25ec5;
+            /* Light gray background color */
+            background-image: url('bg_1.png'); 
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: contain; /* Adjusts image to fit while keeping aspect ratio */
+        }
+
+        .button {
+            background: #FFDDAE;
+            border: none;
+            padding: 20px 40px;
+            margin: 10px;
+            font-size: 20px;
+            font-weight: bold;
+            border-radius: 8px;
+            box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+            position: absolute;
+        }
+        .button:hover {
+            transform: scale(1.1);
+            box-shadow: 6px 6px 15px rgba(0, 0, 0, 0.4);
+            background: #E8B86D;
+        }
+        .button:active {
+            box-shadow: 0 0 20px 5px rgba(215, 18, 240, 0.8);
+            transform: scale(1.05);
+        }
+        .fund { top: 76%; left: 20%; }
+        .cyb { top: 69%; left: 64.5%; }
+        .sec { top: 62%; left: 10%; }
+        .ethic { top: 56.5%; left: 59%; }
+        .dom { top: 50%; left: 14%; }
+        .web { top: 44.5%; left: 65%; }
+        .cloud { top: 38%; left: 23%; }
+        .adv { top: 32%; left: 57.5%; }
+
+        /* Location images */
+        .location-image {
+            position: absolute;
+            width: 100px;
+            height: auto;
+        }
+
+        .fund-img { top: 75.5%; left: 45.5%; }
+        .cyb-img { top: 68.5%; left: 60.2%; }
+        .sec-img { top: 62%; left: 33%; }
+        .ethic-img { top: 56%; left: 55%; }
+        .dom-img { top: 50%; left: 38.5%; }
+        .web-img { top: 43%; left: 61%; }
+        .cloud-img { top: 37%; left: 43.2%; }
+        .adv-img { top: 31%; left: 53.2%; }
+
+        .panel {
+            position: fixed;
+            top: 0;
+            right: -300px;
+            width: 300px;
+            height: 100%;
+            background: #10375C;
+            box-shadow: -4px 0 10px rgba(0, 0, 0, 0.3);
+            transition: right 0.3s ease-in-out;
+            padding: 20px;
+        }
+        .panel.active {
+            right: 0;
+        }
+        .panel img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Location Images -->
+    <img src="location.png" class="location-image fund-img">
+    <img src="location.png" class="location-image cyb-img">
+    <img src="location.png" class="location-image sec-img">
+    <img src="location.png" class="location-image ethic-img">
+    <img src="location.png" class="location-image dom-img">
+    <img src="location.png" class="location-image web-img">
+    <img src="location.png" class="location-image cloud-img">
+    <img src="location.png" class="location-image adv-img">
+
+    <!-- Buttons -->
+    <button class="button fund" onclick="openPanel('Fundamentals of IT & Networking')">Fundamentals of IT & Networking</button>
+    <button class="button cyb" onclick="openPanel('Cybersecurity Basics')">Cybersecurity Basics</button>
+    <button class="button sec" onclick="openPanel('Security Tools & Technologies')">Security Tools & Technologies</button>
+    <button class="button ethic" onclick="openPanel('Ethical Hacking & Penetration Testing')">Ethical Hacking & Penetration Testing</button>
+    <button class="button dom" onclick="openPanel('Security Domains & Frameworks')">Security Domains & Frameworks</button>
+    <button class="button web" onclick="openPanel(' Web & Application Security')"> Web & Application Security</button>
+    <button class="button cloud" onclick="openPanel('Cloud & Network Security')">Cloud & Network Security</button>
+    <button class="button adv" onclick="openPanel('Advanced Cybersecurity Topics')">Advanced Cybersecurity Topics</button>
+
+    <div class="panel" id="infoPanel">
+        <h2 id="panelTitle" style="color:#FCFAEE">Panel</h2>
+        <img id="panelImage" src="" alt="Topic Image">
+        <p id="panelContent">Click a button to see details.</p>
+        <h3 style="color:#FCFAEE">Free Learning</h3>
+        <ul id="freeLinks"></ul>
+        <h3 style="color:#FCFAEE">Paid Learning</h3>
+        <ul>
+            <li><a id="courseraLink" href="#" target="_blank">Coursera</a></li>
+            <li><a id="udemyLink" href="#" target="_blank">Udemy</a></li>
+        </ul>
+        <button onclick="closePanel()">Close</button>
+    </div>
+
+    <script>
+        const learningResources = {
+            'Fundamentals of IT & Networking': {
+                free: [
+                    { text: "Computer Networks (TCP/IP, HTTP/HTTPS, FTP, DNS, SSH)", url: "https://www.youtube.com/watch?v=UB1O30fR-EE" },
+                    { text: " Operating Systems (Windows, Linux, macOS)", url: "https://www.youtube.com/watch?v=qz0aGYrrlhU" },
+                    { text: "Virtualization & Cloud (VMs, Docker, AWS/Azure Security)", url: "https://www.youtube.com/watch?v=G3e-cpL7ofc" }
+                ],
+                paid: {
+                    coursera: "https://www.coursera.org/courses?query=html",
+                    udemy: "https://www.udemy.com/topic/html/"
+                }
+            },
+            'Cybersecurity Basics': {
+                free: [
+                    { text: " Understanding Cyber Threats (Malware, Phishing, Ransomware, DoS, SQL Injection)", url: "https://www.youtube.com/watch?v=yfoY53QXEnI" },
+                    { text: " Cybersecurity Principles", url: "https://www.youtube.com/watch?v=1PnVor36_40" },
+                    { text: "Cryptography Basics", url: "https://www.youtube.com/watch?v=Edsxf_NBFrw" },
+                    { text: "Authentication & Authorization", url: "https://www.youtube.com/watch?v=Edsxf_NBFrw" }
+                ],
+                paid: {
+                    coursera: "https://www.coursera.org/courses?query=css",
+                    udemy: "https://www.udemy.com/topic/css/"
+                }
+            },
+            'Security Tools & Technologies': {
+                free: [
+                    { text: "Firewalls & IDS/IPS", url: "https://www.youtube.com/watch?v=yfoY53QXEnI" },
+                    { text: " SIEM Tools", url: "https://www.youtube.com/watch?v=1PnVor36_40" },
+                    { text: " Endpoint Security", url: "https://www.youtube.com/watch?v=Edsxf_NBFrw" },
+                    { text: "  Penetration Testing Tools ", url: "https://www.youtube.com/watch?v=Edsxf_NBFrw" },
+                    { text: "  Vulnerability Scanners ", url: "https://www.youtube.com/watch?v=Edsxf_NBFrw" }
+                ],
+                paid: {
+                    coursera: "https://www.coursera.org/courses?query=css",
+                    udemy: "https://www.udemy.com/topic/css/"
+                }
+            },
+            'Ethical Hacking & Penetration Testing': {
+                free: [
+                    { text: " Wireless Network Security (WPA, WPA2, WPA3, Aircrack-ng)", url: "https://www.youtube.com/watch?v=yfoY53QXEnI" },
+                    { text: "Social Engineering Attacks & Defenses", url: "https://www.youtube.com/watch?v=1PnVor36_40" }
+                ],
+                paid: {
+                    coursera: "https://www.coursera.org/courses?query=css",
+                    udemy: "https://www.udemy.com/topic/css/"
+                }
+            },
+            'Security Domains & Frameworks': {
+                free: [
+                    { text: "ISO 27001, NIST, CIS, GDPR, HIPAA, SOC 2 Compliance", url: "https://www.youtube.com/watch?v=yfoY53QXEnI" },
+                    { text: "Zero Trust Architecture", url: "https://www.youtube.com/watch?v=1PnVor36_40" },
+                    { text: "Security Information Event Management (SIEM) & SOAR", url: "https://www.youtube.com/watch?v=Edsxf_NBFrw" }
+                ],
+                paid: {
+                    coursera: "https://www.coursera.org/courses?query=css",
+                    udemy: "https://www.udemy.com/topic/css/"
+                }
+            },
+            'Web & Application Security': {
+                free: [
+                    { text: " Web Application Security", url: "https://www.youtube.com/watch?v=yfoY53QXEnI" },
+                    { text: " API Security & Hardening", url: "https://www.youtube.com/watch?v=1PnVor36_40" },
+                    { text: "Reverse Engineering & Malware Analysis", url: "https://www.youtube.com/watch?v=Edsxf_NBFrw" }
+                ],
+                paid: {
+                    coursera: "https://www.coursera.org/courses?query=css",
+                    udemy: "https://www.udemy.com/topic/css/"
+                }
+            },
+            'Cloud & Network Security': {
+                free: [
+                    { text: "Cloud Security", url: "https://www.youtube.com/watch?v=yfoY53QXEnI" },
+                    { text: " IAM(Identity & Access Management)", url: "https://www.youtube.com/watch?v=1PnVor36_40" },
+                    { text: " VPNs & Secure Remote Access", url: "https://www.youtube.com/watch?v=Edsxf_NBFrw" }
+                ],
+                paid: {
+                    coursera: "https://www.coursera.org/courses?query=css",
+                    udemy: "https://www.udemy.com/topic/css/"
+                }
+            },
+            'Advanced Cybersecurity Topics': {
+                free: [
+                    { text: " Threat Intelligence & Hunting", url: "https://www.youtube.com/watch?v=yfoY53QXEnI" },
+                    { text: "Red Team vs. Blue Team vs. Purple Team Operations", url: "https://www.youtube.com/watch?v=1PnVor36_40" },
+                    { text: " Cybersecurity Automation & AI in Security", url: "https://www.youtube.com/watch?v=Edsxf_NBFrw" }
+                ],
+                paid: {
+                    coursera: "https://www.coursera.org/courses?query=css",
+                    udemy: "https://www.udemy.com/topic/css/"
+                }
+            }
+        };
+
+        function openPanel(title) {
+            document.getElementById('panelTitle').innerText = title;
+            document.getElementById('panelContent').innerText = `You clicked on ${title}. More details can go here.`;
+
+            let freeLinks = document.getElementById('freeLinks');
+            freeLinks.innerHTML = "";
+            if (learningResources[title]) {
+                learningResources[title].free.forEach(link => {
+                    let li = document.createElement('li');
+                    let a = document.createElement('a');
+                    a.href = link.url;
+                    a.innerText = link.text;
+                    a.target = "_blank";
+                    li.appendChild(a);
+                    freeLinks.appendChild(li);
+                });
+                document.getElementById('courseraLink').href = learningResources[title].paid.coursera;
+                document.getElementById('udemyLink').href = learningResources[title].paid.udemy;
+            }
+            document.getElementById('infoPanel').classList.add('active');
+        }
+        
+        function closePanel() {
+            document.getElementById('infoPanel').classList.remove('active');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillSeeker</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jotfor.ms/s/umd/latest/for-embedded-agent.js"></script>
+
+    <style>
+        /* Navbar Styling */
+        .navbar {
+            position: fixed;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 50px;
+            background: linear-gradient(to right, #00000000, #00000000);
+            color: white;
+            z-index: 1000;
+        }
+
+        .navbar .title {
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+        }
+
+        .navbar .auth {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .navbar .auth a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            transition: opacity 0.3s;
+        }
+
+        .navbar .auth a:hover {
+            opacity: 0.7;
+        }
+
+        .navbar .auth button {
+            padding: 8px 60px;
+            border: none;
+            background: #6A23AC;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .navbar .auth button:hover {
+            background: #4117b5;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            background: linear-gradient(to bottom, #000000 50%, #6A23AC 100%);
+            color: white;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            overflow: hidden; /* Prevents scrollbar from appearing */
+        }
+
+        .title {
+            font-size: 50px;
+            font-weight: bold;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 1);
+            margin-bottom: 20px;
+            animation: glow 1.5s infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 10px rgba(255, 255, 255, 0.8); }
+            to { text-shadow: 0 0 20px rgba(255, 255, 255, 1); }
+        }
+
+        .search-container {
+            position: fixed;
+            top: 80px;
+            width: 60%;
+            max-width: 600px;
+            padding: 50px;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: center;
+            background: rgba(0, 0, 0, 0); /* Fully transparent */
+            backdrop-filter: none /* Makes it transparent while keeping it readable */
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 15px;
+            font-size: 18px;
+            border: none;
+            border-radius: 30px;
+            outline: none;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            transition: 0.3s;
+            background: none;
+            border: 2px solid #6A23AC;
+            box-shadow: none;
+        }
+
+        .search-box:focus {
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
+        }
+
+        .search-btn {
+            padding: 12px 25px;
+            font-size: 18px;
+            font-weight: bold;
+            color: rgb(255, 255, 255);
+            background: #6A23AC;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: none; /* Removed the transparent box effect */
+        }
+
+
+        .search-btn:hover {
+            background: #4e1c82;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0);
+        }
+
+        .language-select {
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.1);
+            color: white;
+            border: none;
+            outline: none;
+        }
+
+        .results-container {
+            margin-top: 200px;
+            width: 80%;
+            max-width: 800px;
+            overflow-y: auto;
+            height: 70vh;
+            padding: 10px;
+            scrollbar-width: none; /* Hides scrollbar for Firefox */
+            -ms-overflow-style: none; /* Hides scrollbar for IE/Edge */
+            background: none;
+            box-shadow: none;
+        }
+
+        .results-container::-webkit-scrollbar {
+            display: none; /* Hides scrollbar for Chrome/Safari */
+        }
+
+        .video-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .video-card img {
+            width: 120px;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .video-card a {
+            color: #403f3bdd;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .video-card a:hover {
+            text-decoration: underline;
+        }
+    
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="title">SkillUP</div>
+        <div class="auth">
+            <button onclick="window.location.href='homepage.html'">Home</button>
+        </div>
+    </div>
+
+    <div class="title">SkillSeeker 🎬</div>
+    <div class="search-container">
+        <input type="text" id="searchInput" class="search-box" placeholder="Top 5 videos on...">
+        <select id="languageSelect" class="language-select">
+            <option value="en">English</option>
+            <option value="ta">Tamil</option>
+            <option value="es">Spanish</option>
+            <option value="fr">French</option>
+            <option value="de">German</option>
+            <option value="hi">Hindi</option>
+        </select>
+        <button id="searchBtn" class="search-btn" onclick="searchVideos()">Find Videos</button>
+    </div>
+    <div class="results-container" id="results"></div>
+    
+
+    <script>
+        
+        document.addEventListener("DOMContentLoaded", function () {
+            let inputField = document.getElementById("searchInput");
+            let searchButton = document.getElementById("searchBtn");
+
+            inputField.addEventListener("keypress", function (event) {
+                if (event.key === "Enter") {
+                    event.preventDefault();
+                    searchButton.click();
+                }
+            });
+        });
+
+        async function searchVideos() {
+            const query = document.getElementById("searchInput").value.trim();
+            const language = document.getElementById("languageSelect").value;
+
+            if (!query) return;
+
+            // Formatting search query to make it more effective
+            const formattedQuery = encodeURIComponent(`${query} best tutorials ${language}`);
+                                
+            const apiKey = "YOUR_API_KEY"; // Replace with your actual API key
+            const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${formattedQuery}&type=video&maxResults=5&relevanceLanguage=${language}&key=${apiKey}`;
+
+            document.getElementById("results").innerHTML = "<p>Loading...</p>";
+
+            try {
+                const response = await fetch(url);
+                if (!response.ok) throw new Error("Failed to fetch data");
+
+                const data = await response.json();
+                if (!data.items || data.items.length === 0) {
+                    document.getElementById("results").innerHTML = "<p>No videos found. Try a different search!</p>";
+                    return;
+                }
+
+                displayResults(data.items);
+            } catch (error) {
+                console.error("Error fetching videos:", error);
+                document.getElementById("results").innerHTML = "<p>Something went wrong. Try again!</p>";
+            }
+        }
+
+        function displayResults(videos) {
+            const resultsDiv = document.getElementById("results");
+            resultsDiv.innerHTML = "";
+
+            videos.forEach(video => {
+                const videoCard = document.createElement("div");
+                videoCard.classList.add("video-card");
+                videoCard.innerHTML = `
+                    <img src="${video.snippet.thumbnails.medium.url}" alt="Thumbnail">
+                    <div>
+                        <h3 style="font-size:20px; color: #FFFFFF; margin: 0;">
+                            <a href="https://www.youtube.com/watch?v=${video.id.videoId}" target="_blank" style="color: #FFFFFF; text-decoration: none;">
+                                ${video.snippet.title}
+                            </a>
+                        </h3>
+                    </div>
+                `;
+                resultsDiv.appendChild(videoCard);
+            });
+        }
+
+        window.addEventListener("DOMContentLoaded", function() {
+            window.AgentInitializer.init({
+            rootId: "JotformAgent-0195360a53a479a9b77f765292e8c5fba35f",
+            formID: "0195360a53a479a9b77f765292e8c5fba35f",
+            queryParams: ["skipWelcome=1", "maximizable=1"],
+            domain: "https:\/\/www.jotform.com",
+            isInitialOpen: false,
+            isDraggable: false,
+            background: "linear-gradient(180deg, #C8CEED 0%, #C8CEED 100%)",
+            buttonBackgroundColor: "#0a1551",
+            buttonIconColor: "#fff",
+            variant: false,
+            customizations: {
+                greeting: "Yes",
+                greetingMessage: "Hi! explore careers with me!!🥰",
+                pulse: "Yes",
+                position: "right"
+                }
+                });
+              });
+    </script>
+
+</body>
+</html>

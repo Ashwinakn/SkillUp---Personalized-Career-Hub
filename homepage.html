@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillUP - Homepage</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <script src="https://cdn.jotfor.ms/s/umd/latest/for-embedded-agent.js"></script>
+
+    <style>
+
+                /* Sidebar Styling */
+                .sidebar {
+            position: fixed;
+            top: 0;
+            right: -25%; /* Initially hidden */
+            width: 25%;
+            height: 75%;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(15px);
+            box-shadow: -5px 0 15px rgba(255, 255, 255, 0.2);
+            padding: 30px;
+            transition: right 0.4s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+            z-index: 1000;
+        }
+
+        .sidebar .profile-section {
+            text-align: center;
+            width: 100%;
+            padding-bottom: 20px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .sidebar .profile-section i {
+            font-size: 70px;
+        }
+
+        .sidebar .profile-section h3 {
+            margin-top: 10px;
+            font-size: 22px;
+        }
+
+        .sidebar .bottom-section {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-bottom: 30px;
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 12px 0;
+            font-size: 18px;
+            color: white;
+            text-decoration: none;
+            transition: 0.3s;
+            text-align: center;
+            width: 100%;
+        }
+
+        .sidebar a:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+        }
+
+        .sidebar .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 30px;
+            cursor: pointer;
+        }
+
+        /* Profile Icon */
+        .profile-icon {
+            font-size: 30px;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+
+        .profile-icon:hover {
+            opacity: 0.7;
+        }
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+        }
+
+        /* Navbar Styling */
+        .navbar {
+            position: fixed;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 50px;
+            background: transparent;
+            color: white;
+            z-index: 1000;
+        }
+
+        .navbar .title {
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
+        }
+
+        .navbar .auth {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .navbar .auth a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            transition: opacity 0.3s;
+        }
+
+        .navbar .auth a:hover {
+            opacity: 0.7;
+        }
+
+        .navbar .auth button {
+            padding: 8px 16px;
+            border: none;
+            background: #6A23AC;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .navbar .auth button:hover {
+            background: #4117b5;
+        }
+
+        /* Background Gradient */
+        body {
+            background: linear-gradient(to bottom, #000000 50%, #6A23AC 100%);
+            transition: background 0.5s ease-in-out;
+            color: white;
+        }
+
+        /* Video Container */
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .video-container video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Hero Section Text */
+        .hero-text {
+            position: absolute;
+            text-align: center;
+            width: 80%;
+            max-width: 800px;
+            font-size: 50px;
+            font-weight: bold;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.8);
+            top: 35%; /* Move text up */
+            transform: translateY(-50%);
+        }
+
+        .hero-text h4 {
+            font-size: 20px;
+            font-weight: normal;
+            margin-top: 10px;
+        }
+
+        /* CTA Button */
+        .explore-btn {
+            margin-top: 20px;
+            padding: 14px 28px;
+            font-size: 18px;
+            border: none;
+            border-radius: 30px;
+            background-color: #6A23AC;
+            color: white;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .explore-btn:hover {
+            background-color: #4117b5;
+        }
+
+        /* Scrolling Text */
+        .scrolling-text-container {
+            background: rgba(255, 255, 255, 0);
+            overflow: hidden;
+            position: relative;
+            white-space: nowrap;
+            width: 100%;
+            margin-top: -5px;
+        }
+
+        .scrolling-text {
+            display: inline-block;
+            color: white;
+            font-size: 80px;
+            font-weight: bold;
+            white-space: nowrap;
+            animation: scrollText 5s linear infinite;
+        }
+
+        @keyframes scrollText {
+            from {
+                transform: translateX(100%);
+            }
+            to {
+                transform: translateX(-100%);
+            }
+        }
+
+        /* Quote Section */
+        .quote-section {
+            text-align: center;
+            padding: 60px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .quote-container {
+            width: 80%;
+            max-width: 800px;
+            font-size: 24px;
+            font-style: italic;
+            text-align: center;
+            color: white;
+            padding: 20px;
+            border-left: 5px solid #ffffff;
+            border-right: 5px solid #ffffff;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .quote-author {
+            margin-top: 10px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #ffffff;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        .light-ball {
+            
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 40px 15px rgba(255, 255, 255, 0.9), 
+                        0 0 80px 30px rgba(255, 255, 255, 0.6), 
+                        0 0 120px 45px rgba(255, 255, 255, 0.4);
+            transition: transform 0.1s ease-out;
+            opacity: 1;
+        }
+
+        .cards-container {
+            display: flex;
+            justify-content: center;
+            gap: 40px; /* Adjust spacing between cards */
+            padding: -180px 10%; /* Reduced top padding */
+            flex-wrap: wrap;
+            margin-top: -300px; /* Move cards closer to the hero text */
+        }
+
+
+        .card {
+            background: rgba(255, 255, 255, 0.208);
+            color: rgb(255, 255, 255);
+            text-align: center;
+            padding: 20px;
+            width: 450px;
+            height: 120px; /* Adjustable height */
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            transform: translateY(-20px);
+            box-shadow: 0 6px 15px rgba(255, 255, 255, 0.3);
+        }
+
+        .card-link {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+
+    </style>
+</head>
+<body>
+
+    <!-- Light Ball -->
+    <div class="light-ball"></div>
+        <!-- Navbar -->
+    <div class="navbar">
+        <div class="title">SkillUP</div>
+            <div class="auth">
+                <i class="bi bi-person-circle profile-icon" onclick="openSidebar()"></i>
+            </div>
+        </div>
+    </div>
+
+    
+    <!-- Sidebar Menu -->
+    <div class="sidebar" id="sidebar">
+        <span class="close-btn" onclick="closeSidebar()">×</span>
+        
+        <!-- Profile Section -->
+        <div class="profile-section">
+            <i class="bi bi-person-circle"></i>
+            <h3>John Doe</h3>
+            <p>johndoe@example.com</p>
+        </div>
+
+        <!-- Bottom Section -->
+        <div class="bottom-section">
+            <a href="#">Settings</a>
+            <a href="#">Log Out</a>
+        </div>
+    </div
+
+    <!-- Video Hero Section -->
+    <div class="video-container">
+       <div>
+        
+       </div>
+        <div class="hero-text">
+            Unlock Limitless Learning Opportunities!
+            <h4>Explore Courses, Certifications, and Career Guidance to Shape Your Future.</h4>
+            
+        </div>
+    </div>
+
+    <!-- Cards Section -->
+    <div class="cards-container">
+        <a href="Skill-o-meter.html" class="card-link">
+            <div class="card" onclick="cardClicked('Course Library')">
+                <h3>Pathway Pro</h3>
+                <p>Lost in the learning jungle? Follow this map to avoid skill detours!</p>
+            </div>
+        </a>
+
+        <a href="TrendTalk.html" class="card-link">
+            <div class="card" onclick="cardClicked('Certifications')">
+                <h3>TrendTalk</h3>
+                <p>Stay Updated, Stay Ahead – Dive into the Latest Trends & Discussions!</p>
+            </div>
+        </a>
+
+        <a href="SkillSeeker.html" class="card-link">
+            <div class="card" onclick="cardClicked('Career Guidance')">
+                <h3>SkillSeeker</h3>
+                <p>Find the Best Learning Videos in Just One Click!</p>
+            </div>
+        </a>
+    </div>
+
+
+    <!-- Scrolling Text -->
+    <div class="scrolling-text-container">
+        <div class="scrolling-text">LEARN. GROW. SUCCEED.</div>
+    </div>
+
+    <!-- Quote Section -->
+    <div class="quote-section">
+        <div class="quote-container" id="quoteText">"The future belongs to those who believe in the beauty of their dreams."</div>
+        <div class="quote-author" id="quoteAuthor">- Eleanor Roosevelt</div>
+    </div>
+   
+
+    <script>
+            // Quotes Array
+    const quotes = [
+        { text: "The future belongs to those who believe in the beauty of their dreams.", author: "Eleanor Roosevelt" },
+        { text: "Your work is going to fill a large part of your life, and the only way to be truly satisfied is to do what you believe is great work.", author: "Steve Jobs" },
+        { text: "It does not matter how slowly you go as long as you do not stop.", author: "Confucius" },
+        { text: "The only way to do great work is to love what you do.", author: "Steve Jobs" },
+        { text: "Choose a job you love, and you will never have to work a day in your life.", author: "Confucius" },
+        { text: "Do not be afraid to give up the good to go for the great.", author: "John D. Rockefeller" }
+    ];
+
+    // Function to Change Quote Every 5 Seconds
+    function changeQuote() {
+        const randomIndex = Math.floor(Math.random() * quotes.length);
+        document.getElementById("quoteText").textContent = `"${quotes[randomIndex].text}"`;
+        document.getElementById("quoteAuthor").textContent = `- ${quotes[randomIndex].author}`;
+    }
+
+    // Run Immediately & Set Interval
+    changeQuote();
+    setInterval(changeQuote, 5000);
+
+    // Light Ball Effect
+    document.addEventListener("mousemove", (e) => {
+        const lightBall = document.querySelector(".light-ball");
+        if (lightBall) {
+            requestAnimationFrame(() => {
+                lightBall.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+            });
+        }
+    });
+
+    // Card Click Function
+    
+
+    // Sidebar Functions
+    function openSidebar() {
+        document.getElementById("sidebar").style.right = "0"; // Show sidebar
+    }
+
+    function closeSidebar() {
+        document.getElementById("sidebar").style.right = "-25%"; // Hide sidebar
+    }
+
+    // Close sidebar when clicking outside of it
+    document.addEventListener("click", function(event) {
+        let sidebar = document.getElementById("sidebar");
+        let profileIcon = document.querySelector(".profile-icon");
+
+        if (!sidebar.contains(event.target) && !profileIcon.contains(event.target)) {
+            closeSidebar();
+        }
+    });
+
+
+    
+    
+  window.addEventListener("DOMContentLoaded", function() {
+    window.AgentInitializer.init({
+      rootId: "JotformAgent-0195360a53a479a9b77f765292e8c5fba35f",
+      formID: "0195360a53a479a9b77f765292e8c5fba35f",
+      queryParams: ["skipWelcome=1", "maximizable=1"],
+      domain: "https:\/\/www.jotform.com",
+      isInitialOpen: false,
+      isDraggable: false,
+      background: "linear-gradient(180deg, #C8CEED 0%, #C8CEED 100%)",
+      buttonBackgroundColor: "#0a1551",
+      buttonIconColor: "#fff",
+      variant: false,
+      customizations: {
+        greeting: "Yes",
+        greetingMessage: "Hi! explore careers with me!!🥰",
+        pulse: "Yes",
+        position: "right"
+      }
+    });
+  });
+
+
+    </script>
+
+</body>
+</html>

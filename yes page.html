@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career Preference</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            box-sizing: border-box;
+        }
+        body {
+            background: linear-gradient(to bottom, #000000, #6A23AC);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding-top: 80px;
+        }
+        .navbar {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 50px;
+            background: transparent;
+            color: white;
+            z-index: 1000;
+        }
+        .navbar .title {
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
+        }
+        .form-box {
+            width: 600px;
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(8px);
+            background-color: rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+            position: relative;
+            height: 350px;
+        }
+        .form-box h2, h4 {
+            color: #fff;
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .selected-box {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 10px;
+        }
+        .selected-box input {
+            border: none;
+            outline: none;
+            font-size: 18px;
+            padding: 10px;
+            border-radius: 10px;
+            width: 100%;
+            text-align: center;
+            background: white;
+            color: black;
+        }
+        .career-display {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: white;
+            color: black;
+            font-size: 24px;
+            font-weight: bold;
+            width: 100%;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            position: relative;
+        }
+        .career-display .career-text {
+            text-align: center;
+        }
+        .career-display .remove-btn {
+            font-size: 28px;
+            cursor: pointer;
+            font-weight: bold;
+            color: red;
+            margin-left: 15px; /* Added spacing between text and X */
+        }
+        .button-container {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            margin-top: 30px;
+        }
+        .next-btn {
+            padding: 14px 28px;
+            font-size: 18px;
+            border: none;
+            border-radius: 30px;
+            background-color: #6A23AC;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .next-btn:hover {
+            background-color: #4117b5;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="title">SkillUP</div>
+    </div>
+    <div class="form-box">
+        <h2>Career Preference</h2>
+        <h4>Type Your Career Preference</h4>
+        <div class="selected-box">
+            <input type="text" id="careerInput" onkeydown="handleCareerInput(event)" placeholder="Type your career...">
+        </div>
+        <div id="careerContainer" style="display: none;"></div>
+        <div class="button-container">
+            <a href="homepage.html">
+                <button type="button" class="next-btn">Go to Home Page →</button>
+            </a>
+        </div>
+    </div>
+    <script>
+        function handleCareerInput(event) {
+            const input = event.target.value.trim();
+            if (event.key === "Enter" && input !== "") {
+                updateSelectedCareer(input);
+                event.target.value = "";
+                event.target.style.display = "none"; // Hide input box after selection
+            }
+        }
+
+        function updateSelectedCareer(career) {
+            const container = document.getElementById("careerContainer");
+            container.innerHTML = `
+                <div class="career-display">
+                    <span class="career-text">${career}</span>
+                    <span class="remove-btn" onclick="removeCareer()">×</span>
+                </div>`;
+            container.style.display = "flex";
+            container.style.justifyContent = "center";
+        }
+
+        function removeCareer() {
+            document.getElementById("careerContainer").style.display = "none";
+            document.getElementById("careerInput").style.display = "block";
+        }
+    </script>
+</body>
+</html>

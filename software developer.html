@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elevated Buttons with Sliding Panel</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            width: 100%;
+            overflow: hidden;
+
+            background: #b25ec5;
+            /* Light gray background color */
+            background-image: url('bg-2.png'); 
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: contain; /* Adjusts image to fit while keeping aspect ratio */
+        }
+
+        .button {
+            background: #FFDDAE;
+            border: none;
+            padding: 20px 40px;
+            margin: 10px;
+            font-size: 20px;
+            font-weight: bold;
+            border-radius: 8px;
+            box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+            position: absolute;
+        }
+        .button:hover {
+            transform: scale(1.1);
+            box-shadow: 6px 6px 15px rgba(0, 0, 0, 0.4);
+            background: #E8B86D;
+        }
+        .button:active {
+            box-shadow: 0 0 20px 5px rgba(215, 18, 240, 0.8);
+            transform: scale(1.05);
+        }
+        .fund { top: 73%; left: 21.5%; }
+        .oop { top: 67%; left: 63%; }
+        .dsa { top: 62%; left: 11%; }
+        .db { top: 56%; left: 59%; }
+        .version { top: 50.5%; left: 25%; }
+        .software { top: 45.5%; left: 63%; }
+        .cloud { top: 39%; left: 9%; }
+        .os { top: 33%; left: 57.5%; }
+        .problem { top: 27.5%; left: 6%; }
+
+        /* Location images */
+        .location-image {
+            position: absolute;
+            width: 100px;
+            height: auto;
+        }
+
+        .fund-img { top: 72%; left: 45%; }
+        .oop-img{ top: 66%; left: 59%; }
+        .dsa-img { top: 61%; left: 34%; }
+        .db-img { top: 55.5%; left: 54%; }
+        .version-img { top: 50%; left: 39%; }
+        .software-img { top: 44%; left: 57.5%; }
+        .cloud-img { top: 38%; left: 33.8%; }
+        .os-img { top: 32.5%; left:53.5%; }
+        .problem-img { top: 26.5%; left:39%; }
+
+        .panel {
+            position: fixed;
+            top: 0;
+            right: -350px; /* Increased width for better visibility */
+            width: 350px; /* Adjust width for better layout */
+            height: 100%;
+            background: #10375C;
+            box-shadow: -4px 0 10px rgba(0, 0, 0, 0.3);
+            transition: right 0.7s ease-in-out;
+            padding: 20px;
+            z-index: 1000; /* Ensure panel is above other elements */
+            color: #FCFAEE;
+            display: flex;
+            flex-direction: column;
+            align-items: left;
+        }
+
+        .panel.active {
+            right: 0;
+        }
+
+        /* Styling for the close button */
+        .panel button {
+            background: #FF6B6B;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin-top: 15px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease-in-out;
+        }
+
+        .panel button:hover {
+            background: #D94444;
+        }
+
+
+        
+    </style>
+</head>
+<body>
+    <!-- Location Images -->
+    <img src="location.png" class="location-image fund-img">
+    <img src="location.png" class="location-image oop-img">
+    <img src="location.png" class="location-image dsa-img">
+    <img src="location.png" class="location-image db-img">
+    <img src="location.png" class="location-image version-img">
+    <img src="location.png" class="location-image software-img">
+    <img src="location.png" class="location-image cloud-img">
+    <img src="location.png" class="location-image os-img">
+    <img src="location.png" class="location-image problem-img">
+
+    <!-- Buttons -->
+    <button class="button fund" onclick="openPanel('Fundamentals of Programming')">Fundamentals of Programming</button>
+    <button class="button oop" onclick="openPanel('Object-Oriented Programming')">Object-Oriented Programming</button>
+    <button class="button dsa" onclick="openPanel('Data Structures & Algorithms')">Data Structures & Algorithms</button>
+    <button class="button db" onclick="openPanel('Databases & SQL')">Databases & SQL</button>
+    <button class="button version" onclick="openPanel('Version Control ')">Version Control </button>
+    <button class="button software" onclick="openPanel('Software Development Methodologies')">Software Development Methodologies</button>
+    <button class="button cloud" onclick="openPanel('Cloud Computing & Deployment')">Cloud Computing & Deployment</button>
+    <button class="button os" onclick="openPanel('Operating Systems & Networking')">Operating Systems & Networking</button>
+    <button class="button problem" onclick="openPanel('Problem-Solving & Competitive Programming')">Problem-Solving & Competitive Programming</button>
+
+    <div class="panel" id="infoPanel">
+        <h2 id="panelTitle" style="color:#FCFAEE">Panel</h2>
+        <img id="panelImage" src="" alt="Topic Image">
+        <p id="panelContent">Click a button to see details.</p>
+        <h3 style="color:#FCFAEE">Free Learning</h3>
+        <ul id="freeLinks"></ul>
+        <h3 style="color:#FCFAEE">Paid Learning</h3>
+        <ul>
+            <li><a id="courseraLink" href="#" target="_blank">Coursera</a></li>
+            <li><a id="udemyLink" href="#" target="_blank">Udemy</a></li>
+        </ul>
+        <button onclick="closePanel()">Close</button>
+    </div>
+
+    <script>
+        const learningResources = {
+            'Fundamentals of Programming': {
+                free: [
+                    { text: "Python Programming Language ", url: "https://www.youtube.com/watch?v=UB1O30fR-EE" },
+                    { text: "Java programming Language", url: "https://www.youtube.com/watch?v=qz0aGYrrlhU" },
+                    { text: "JavaScript full course", url: "https://www.youtube.com/watch?v=G3e-cpL7ofc" },
+                    { text: "C++ or C#", url: "https://www.youtube.com/watch?v=G3e-cpL7ofc" }
+                ],
+                paid: {
+                    coursera: "https://www.coursera.org/courses?query=html",
+                    udemy: "https://www.udemy.com/topic/html/"
+                }
+            },
+            'Object-Oriented Programming': {
+                free: [
+                    { text: "Classes & Objects", url: "https://www.youtube.com/watch?v=yfoY53QXEnI" },
+                    { text: "Encapsulation, Abstraction, Inheritance, Polymorphism", url: "https://www.youtube.com/watch?v=1PnVor36_40" },
+                    { text: "Interfaces & Abstract Classes", url: "https://www.youtube.com/watch?v=Edsxf_NBFrw" }
+                ],
+                paid: {
+                    coursera: "https://www.coursera.org/courses?query=css",
+                    udemy: "https://www.udemy.com/topic/css/"
+                }
+            },
+            'Data Structures & Algorithms': {
+                free: [
+                    { text: "Arrays, Linked Lists, Stacks, Queues", url: "https://www.youtube.com/watch?v=yfoY53QXEnI" },
+                    { text: "Trees (Binary Tree, BST, Heap, Trie, etc.)", url: "https://www.youtube.com/watch?v=1PnVor36_40" },
+                    { text: "Sorting & Searching Algorithms", url: "https://www.youtube.com/watch?v=Edsxf_NBFrw" },
+                    { text: "Dynamic Programming & Recursion", url: "https://www.youtube.com/watch?v=Edsxf_NBFrw" },
+                    { text: "Time & Space Complexity (Big-O Notation)", url: "https://www.youtube.com/watch?v=Edsxf_NBFrw" }
+                ],
+                paid: {
+                    coursera: "https://www.coursera.org/courses?query=css",
+                    udemy: "https://www.udemy.com/topic/css/"
+                }
+            },
+            'Databases & SQL': {
+                free: [
+                    { text: " Relational Databases (MySQL, PostgreSQL, Oracle, SQL Server)", url: "https://www.youtube.com/watch?v=yfoY53QXEnI" },
+                    { text: " NoSQL Databases (MongoDB, Firebase, Redis, Cassandra)", url: "https://www.youtube.com/watch?v=1PnVor36_40" },
+                    { text: " CRUD Operations (Create, Read, Update, Delete)", url: "https://www.youtube.com/watch?v=Edsxf_NBFrw" }
+                ],
+                paid: {
+                    coursera: "https://www.coursera.org/courses?query=css",
+                    udemy: "https://www.udemy.com/topic/css/"
+                }
+            },
+            'Version Control': {
+                free: [
+                    { text: "Git Basics (init, clone, commit, push, pull, merge, branch)", url: "https://www.youtube.com/watch?v=yfoY53QXEnI" },
+                    { text: "Working with GitHub (Repositories, Pull Requests, Issues, CI/CD)", url: "https://www.youtube.com/watch?v=1PnVor36_40" }
+                ],
+                paid: {
+                    coursera: "https://www.coursera.org/courses?query=css",
+                    udemy: "https://www.udemy.com/topic/css/"
+                }
+            },
+            'Software Development Methodologies': {
+                free: [
+                    { text: "Agile & Scrum", url: "https://www.youtube.com/watch?v=yfoY53QXEnI" },
+                    { text: " DevOps Practices (CI/CD, Docker, Kubernetes, Jenkins)", url: "https://www.youtube.com/watch?v=1PnVor36_40" },
+                    { text: " Testing & Debugging (Unit Testing, Integration Testing, TDD)", url: "https://www.youtube.com/watch?v=Edsxf_NBFrw" },
+                    { text: "System Design & Architecture", url: "https://www.youtube.com/watch?v=Edsxf_NBFrw" }
+                ],
+                paid: {
+                    coursera: "https://www.coursera.org/courses?query=css",
+                    udemy: "https://www.udemy.com/topic/css/"
+                }
+            },
+            'Cloud Computing & Deployment': {
+                free: [
+                    { text: "AWS / GCP / Azure", url: "https://www.youtube.com/watch?v=yfoY53QXEnI" },
+                    { text: "Docker & Kubernetes", url: "https://www.youtube.com/watch?v=1PnVor36_40" },
+                    { text: "API Development (Flask / FastAPI)", url: "https://www.youtube.com/watch?v=Edsxf_NBFrw" },
+                    { text: "API Development (Flask / FastAPI)", url: "https://www.youtube.com/watch?v=Edsxf_NBFrw" },
+                    { text: "Model Deployment (Streamlit, Gradio)", url: "https://www.youtube.com/watch?v=Edsxf_NBFrw" }
+                ],
+                paid: {
+                    coursera: "https://www.coursera.org/courses?query=css",
+                    udemy: "https://www.udemy.com/topic/css/"
+                }
+            },
+            'Operating Systems & Networking': {
+                free: [
+                    { text: "OS Concepts (Processes, Threads, Memory Management, File Systems)", url: "https://www.youtube.com/watch?v=yfoY53QXEnI" },
+                    { text: " Networking Basics (HTTP, HTTPS, TCP/IP, DNS, FTP, SSH, WebSockets)", url: "https://www.youtube.com/watch?v=1PnVor36_40" },
+                    { text: "Sockets & Web Protocols", url: "https://www.youtube.com/watch?v=Edsxf_NBFrw" }
+                ],
+                paid: {
+                    coursera: "https://www.coursera.org/courses?query=css",
+                    udemy: "https://www.udemy.com/topic/css/"
+                }
+            },
+            'Problem-Solving & Competitive Programming': {
+                free: [
+                    { text: " LeetCode, CodeChef, Codeforces, HackerRank", url: "https://www.youtube.com/watch?v=yfoY53QXEnI" },
+                    { text: " Competitive Programming & Algorithm Challenges", url: "https://www.youtube.com/watch?v=1PnVor36_40" },
+                    { text: "Participating in Hackathons & Open Source Contributions", url: "https://www.youtube.com/watch?v=Edsxf_NBFrw" }
+                ],
+                paid: {
+                    coursera: "https://www.coursera.org/courses?query=css",
+                    udemy: "https://www.udemy.com/topic/css/"
+                }
+            }
+        };
+
+        function openPanel(title) {
+            document.getElementById('panelTitle').innerText = title;
+            document.getElementById('panelContent').innerText = `You clicked on ${title}. More details can go here.`;
+
+            let freeLinks = document.getElementById('freeLinks');
+            freeLinks.innerHTML = "";
+            if (learningResources[title]) {
+                learningResources[title].free.forEach(link => {
+                    let li = document.createElement('li');
+                    let a = document.createElement('a');
+                    a.href = link.url;
+                    a.innerText = link.text;
+                    a.target = "_blank";
+                    li.appendChild(a);
+                    freeLinks.appendChild(li);
+                });
+                document.getElementById('courseraLink').href = learningResources[title].paid.coursera;
+                document.getElementById('udemyLink').href = learningResources[title].paid.udemy;
+            }
+            document.getElementById('infoPanel').classList.add('active');
+        }
+        
+        function closePanel() {
+            document.getElementById('infoPanel').classList.remove('active');
+        }
+    </script>
+</body>
+</html>

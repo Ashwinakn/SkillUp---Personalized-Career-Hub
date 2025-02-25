@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elevated Buttons with Sliding Panel</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            width: 100%;
+            overflow: hidden;
+
+            background: #b25ec5;
+            /* Light gray background color */
+            background-image: url('bg_1.png'); 
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: contain; /* Adjusts image to fit while keeping aspect ratio */
+        }
+
+        .button {
+            background: #FFDDAE;
+            border: none;
+            padding: 20px 40px;
+            margin: 10px;
+            font-size: 20px;
+            font-weight: bold;
+            border-radius: 8px;
+            box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+            position: absolute;
+        }
+        .button:hover {
+            transform: scale(1.1);
+            box-shadow: 6px 6px 15px rgba(0, 0, 0, 0.4);
+            background: #E8B86D;
+        }
+        .button:active {
+            box-shadow: 0 0 20px 5px rgba(215, 18, 240, 0.8);
+            transform: scale(1.05);
+        }
+        .html { top: 69%; left: 66%; }
+        .css { top: 64%; left: 23%; }
+        .js { top: 56%; left: 60%; }
+        .react { top: 51%; left: 28.5%; }
+        .node { top: 44%; left: 66%; }
+        .express { top: 38%; left: 32.5%; }
+        .mongo { top: 32.5%; left: 57.5%; }
+
+        /* Location images */
+        .location-image {
+            position: absolute;
+            width: 100px;
+            height: auto;
+        }
+
+        .html-img { top: 68%; left: 61%; }
+        .css-img { top: 62%; left: 32.4%; }
+        .js-img { top: 56%; left: 55.5%; }
+        .react-img { top: 50%; left: 38%; }
+        .node-img { top: 44%; left: 62%; }
+        .express-img { top: 38%; left: 43%; }
+        .mongo-img { top: 30.5%; left: 53.5%; }
+
+        .panel {
+            position: fixed;
+            top: 0;
+            right: -300px;
+            width: 300px;
+            height: 100%;
+            background: #10375C;
+            box-shadow: -4px 0 10px rgba(0, 0, 0, 0.3);
+            transition: right 0.3s ease-in-out;
+            padding: 20px;
+        }
+        .panel.active {
+            right: 0;
+        }
+        .panel img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Location Images -->
+    <img src="location.png" class="location-image html-img">
+    <img src="location.png" class="location-image css-img">
+    <img src="location.png" class="location-image js-img">
+    <img src="location.png" class="location-image react-img">
+    <img src="location.png" class="location-image node-img">
+    <img src="location.png" class="location-image express-img">
+    <img src="location.png" class="location-image mongo-img">
+
+    <!-- Buttons -->
+    <button class="button html" onclick="openPanel('HTML')">HTML</button>
+    <button class="button css" onclick="openPanel('CSS')">CSS</button>
+    <button class="button js" onclick="openPanel('JS')">JS</button>
+    <button class="button react" onclick="openPanel('React.js')">React.js</button>
+    <button class="button node" onclick="openPanel('Node.js')">Node.js</button>
+    <button class="button express" onclick="openPanel('Express.js')">Express.js</button>
+    <button class="button mongo" onclick="openPanel('MongoDB')">MongoDB</button>
+
+    <div class="panel" id="infoPanel">
+        <h2 id="panelTitle" style="color:#FCFAEE">Panel</h2>
+        <img id="panelImage" src="" alt="Topic Image">
+        <p id="panelContent">Click a button to see details.</p>
+        <h3 style="color:#FCFAEE">Free Learning</h3>
+        <ul id="freeLinks"></ul>
+        <h3 style="color:#FCFAEE">Paid Learning</h3>
+        <ul>
+            <li><a id="courseraLink" href="#" target="_blank">Coursera</a></li>
+            <li><a id="udemyLink" href="#" target="_blank">Udemy</a></li>
+        </ul>
+        <button onclick="closePanel()">Close</button>
+    </div>
+
+    <script>
+        const learningResources = {
+            'HTML': {
+                free: [
+                    { text: "HTML Crash Course", url: "https://www.youtube.com/watch?v=UB1O30fR-EE" },
+                    { text: "HTML Tutorial for Beginners", url: "https://www.youtube.com/watch?v=qz0aGYrrlhU" },
+                    { text: "Learn HTML Full course", url: "https://www.youtube.com/watch?v=G3e-cpL7ofc" }
+                ],
+                paid: {
+                    coursera: "https://www.coursera.org/courses?query=html",
+                    udemy: "https://www.udemy.com/topic/html/"
+                }
+            },
+            'CSS': {
+                free: [
+                    { text: "CSS Crash Course", url: "https://www.youtube.com/watch?v=yfoY53QXEnI" },
+                    { text: "CSS Basics", url: "https://www.youtube.com/watch?v=1PnVor36_40" },
+                    { text: "Advanced CSS", url: "https://www.youtube.com/watch?v=Edsxf_NBFrw" }
+                ],
+                paid: {
+                    coursera: "https://www.coursera.org/courses?query=css",
+                    udemy: "https://www.udemy.com/topic/css/"
+                }
+            },
+            'JS': {
+                free: [
+                    { text: "Java Script Crash Course", url: "https://www.youtube.com/watch?v=yfoY53QXEnI" },
+                    { text: "Java Script Basics", url: "https://www.youtube.com/watch?v=1PnVor36_40" },
+                    { text: "Advanced Java Script", url: "https://www.youtube.com/watch?v=Edsxf_NBFrw" }
+                ],
+                paid: {
+                    coursera: "https://www.coursera.org/courses?query=css",
+                    udemy: "https://www.udemy.com/topic/css/"
+                }
+            },
+            'React.js': {
+                free: [
+                    { text: "React.js Crash Course", url: "https://www.youtube.com/watch?v=yfoY53QXEnI" },
+                    { text: "React.js Basics", url: "https://www.youtube.com/watch?v=1PnVor36_40" },
+                    { text: "Advanced React.js", url: "https://www.youtube.com/watch?v=Edsxf_NBFrw" }
+                ],
+                paid: {
+                    coursera: "https://www.coursera.org/courses?query=css",
+                    udemy: "https://www.udemy.com/topic/css/"
+                }
+            },
+            'Node.js': {
+                free: [
+                    { text: "Node.js Crash Course", url: "https://www.youtube.com/watch?v=yfoY53QXEnI" },
+                    { text: "Node.js Basics", url: "https://www.youtube.com/watch?v=1PnVor36_40" },
+                    { text: "Advanced Node.js", url: "https://www.youtube.com/watch?v=Edsxf_NBFrw" }
+                ],
+                paid: {
+                    coursera: "https://www.coursera.org/courses?query=css",
+                    udemy: "https://www.udemy.com/topic/css/"
+                }
+            },
+            'Express.js': {
+                free: [
+                    { text: "Express.js Crash Course", url: "https://www.youtube.com/watch?v=yfoY53QXEnI" },
+                    { text: "Express.js Basics", url: "https://www.youtube.com/watch?v=1PnVor36_40" },
+                    { text: "Advanced Express.js", url: "https://www.youtube.com/watch?v=Edsxf_NBFrw" }
+                ],
+                paid: {
+                    coursera: "https://www.coursera.org/courses?query=css",
+                    udemy: "https://www.udemy.com/topic/css/"
+                }
+            },
+            'MongoDB': {
+                free: [
+                    { text: "MongoDB Crash Course", url: "https://www.youtube.com/watch?v=yfoY53QXEnI" },
+                    { text: "MongoDB Basics", url: "https://www.youtube.com/watch?v=1PnVor36_40" },
+                    { text: "Advanced MongoDB", url: "https://www.youtube.com/watch?v=Edsxf_NBFrw" }
+                ],
+                paid: {
+                    coursera: "https://www.coursera.org/courses?query=css",
+                    udemy: "https://www.udemy.com/topic/css/"
+                }
+            },
+        };
+
+        function openPanel(title) {
+            document.getElementById('panelTitle').innerText = title;
+            document.getElementById('panelContent').innerText = `You clicked on ${title}. More details can go here.`;
+
+            let freeLinks = document.getElementById('freeLinks');
+            freeLinks.innerHTML = "";
+            if (learningResources[title]) {
+                learningResources[title].free.forEach(link => {
+                    let li = document.createElement('li');
+                    let a = document.createElement('a');
+                    a.href = link.url;
+                    a.innerText = link.text;
+                    a.target = "_blank";
+                    li.appendChild(a);
+                    freeLinks.appendChild(li);
+                });
+                document.getElementById('courseraLink').href = learningResources[title].paid.coursera;
+                document.getElementById('udemyLink').href = learningResources[title].paid.udemy;
+            }
+            document.getElementById('infoPanel').classList.add('active');
+        }
+        
+        function closePanel() {
+            document.getElementById('infoPanel').classList.remove('active');
+        }
+    </script>
+</body>
+</html>

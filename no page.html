@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career Guidance</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            box-sizing: border-box;
+        }
+        body {
+            background: linear-gradient(to bottom, #000000, #6A23AC);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding-top: 80px;
+        }
+        .navbar {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 50px;
+            background: transparent;
+            color: white;
+            z-index: 1000;
+        }
+        .navbar .title {
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
+        }
+        .form-box {
+            width: 600px;
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(8px);
+            background-color: rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+            position: relative;
+            height: 350px;
+            text-align: center;
+        }
+        .form-box h2 {
+            color: #fff;
+            font-size: 26px;
+            margin-bottom: 20px;
+        }
+        .form-box p {
+            color: #ddd;
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+        .button-container {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            margin-top: 20px;
+        }
+        .explore-btn {
+            padding: 14px 28px;
+            font-size: 18px;
+            border: none;
+            border-radius: 30px;
+            background-color: #6A23AC;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .explore-btn:hover {
+            background-color: #4117b5;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="title">SkillUP</div>
+    </div>
+    <div class="form-box">
+        <h2>Don't Worry!</h2>
+        <p>It's completely okay if you haven't decided on a career yet. <br> 
+        Take your time to explore different paths and find what excites you!</p>
+        <div class="button-container">
+            <a href="homepage.html">
+                <button type="button" class="explore-btn">Explore More →</button>
+            </a>
+        </div>
+    </div>
+</body>
+</html>
