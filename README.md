@@ -1,4 +1,4 @@
-# SkillUP - Project Overview 🚀
+# SkillUP - Project Overview
 ## Introduction
 
 SkillUP is an AI-driven career guidance and upskilling platform designed to help individuals navigate their learning and career growth journey. The platform provides users with personalized study roadmaps, free and paid course access, real-time career insights, and an AI-powered chatbot that assists in career decision-making.
