@@ -20,6 +20,6 @@ SkillUP is built to achieve the following objectives:
 
 ## Contributors
 
-- [@Ashwinakn](https://github.com/Ashwinakn) - Frontend, UI/UX
-- [@shivaa-palaniyappan](https://github.com/shivaa-palaniyappan) - Backend, API Integration
-- [@sowmya-badoni](https://github.com/sowmya-badoni) - AI/ML Processing
+- [@Ashwina K N](https://github.com/Ashwinakn)
+- [@Shivaa Palaniyappan V](https://github.com/shivaa-palaniyappan) 
+- [@Sowmya Badoni](https://github.com/sowmya-badoni) 
