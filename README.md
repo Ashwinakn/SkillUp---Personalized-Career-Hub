@@ -17,3 +17,9 @@ SkillUP is built to achieve the following objectives:
 ✅ Deliver real-time industry news and insights to keep users updated.
 
 ✅ Empower users with AI-driven career guidance through an interactive chatbot.
+
+## Contributors
+
+- [@Ashwinakn](https://github.com/Ashwinakn) - Frontend, UI/UX
+- [@shivaa-palaniyappan](https://github.com/shivaa-palaniyappan) - Backend, API Integration
+- [@sowmya-badoni](https://github.com/sowmya-badoni) - AI/ML Processing
